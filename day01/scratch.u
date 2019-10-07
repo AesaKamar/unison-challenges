@@ -11,26 +11,16 @@ use test.v1
 --   fileContents = getText fileHandle
 --   printLine fileContents
 --   closeFile fileHandle
---
---
-parseAlpha: Text -> Either (List Text) Char
-parseAlpha txt = case char.toCharList txt of
-  x +: _  | (or (and (Char.toNat x >= 65) (Char.toNat x <= 90))
-                (and (Char.toNat x >= 97) (Char.toNat x <= 122)))  ->
+
+
+parseNumeric: Text -> Either (List Text) Char
+parseNumeric txt = case char.toCharList txt of
+  x +: _  | (and (Char.toNat x >= 48) (Char.toNat x <= 57)) ->
     Right x
   x +: _  ->
-    Left ["Leftmost char was not Alphanumeric: " :+ x ]
+    Left ["Leftmost char was not Numeric: " :+ x ]
   _  ->
     Left ["Input was Empty:"]
-
-
-test> [ expect ((parseAlpha "a") == (Right ?a))
-      , expect ((parseAlpha "z") == (Right ?z))
-      , expect ((parseAlpha "A") == (Right ?A))
-      , expect ((parseAlpha "Z") == (Right ?Z))
-      , expect ((parseAlpha "") == (Left ["Input was Empty:"]))
-      , expect ((parseAlpha "#") == (Left ["Leftmost char was not Alphanumeric: #"]))
-      ] |> tests |> run
 
 
 
