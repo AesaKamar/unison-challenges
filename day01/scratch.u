@@ -1,0 +1,46 @@
+use .base
+use .io
+
+
+use test.v1
+
+-- readInputFromAFile : '{io.IO} Unit
+-- readInputFromAFile = 'let
+--   filePath = FilePath.FilePath "./day01/input.txt"
+--   fileHandle = openFile filePath Mode.Read
+--   fileContents = getText fileHandle
+--   printLine fileContents
+--   closeFile fileHandle
+--
+--
+parseAlphanumeric: Text -> Either (List Text) Char
+parseAlphanumeric txt = case char.toCharList txt of
+  x +: _  | (or (and (Char.toNat x >= 65) (Char.toNat x <= 90))
+                (and (Char.toNat x >= 97) (Char.toNat x <= 122)))  ->
+    Right x
+  x +: _  ->
+    Left ["Leftmost char was not Alphanumeric: " :+ x ]
+  _  ->
+    Left ["Input was Empty:"]
+
+
+test> [ expect ((parseAlphanumeric "a") == (Right ?a))
+      , expect ((parseAlphanumeric "z") == (Right ?z))
+      , expect ((parseAlphanumeric "A") == (Right ?A))
+      , expect ((parseAlphanumeric "Z") == (Right ?Z))
+      , expect ((parseAlphanumeric "") == (Left ["Input was Empty:"]))
+      , expect ((parseAlphanumeric "#") == (Left ["Leftmost char was not Alphanumeric: #"]))
+      ] |> tests |> run
+
+
+
+
+-- sumInputFromAFile : '{io.IO} Unit
+-- sumInputFromAFile = 'let
+--   filePath = FilePath.FilePath "./day01/input.txt"
+--   fileHandle = openFile filePath Mode.Read
+--   fileContents = getText fileHandle
+--   printLine fileContents
+--   closeFile fileHandle
+
+-- program1:

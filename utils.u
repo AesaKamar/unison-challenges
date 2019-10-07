@@ -1,0 +1,7 @@
+use .base
+use .io
+
+
+
+(:+) : Text -> Char ->  Text
+xs :+ x =  ((Text.toCharList xs) List.:+ x) |> fromCharList
