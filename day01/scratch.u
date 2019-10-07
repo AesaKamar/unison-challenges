@@ -13,8 +13,8 @@ use test.v1
 --   closeFile fileHandle
 --
 --
-parseAlphanumeric: Text -> Either (List Text) Char
-parseAlphanumeric txt = case char.toCharList txt of
+parseAlpha: Text -> Either (List Text) Char
+parseAlpha txt = case char.toCharList txt of
   x +: _  | (or (and (Char.toNat x >= 65) (Char.toNat x <= 90))
                 (and (Char.toNat x >= 97) (Char.toNat x <= 122)))  ->
     Right x
@@ -24,12 +24,12 @@ parseAlphanumeric txt = case char.toCharList txt of
     Left ["Input was Empty:"]
 
 
-test> [ expect ((parseAlphanumeric "a") == (Right ?a))
-      , expect ((parseAlphanumeric "z") == (Right ?z))
-      , expect ((parseAlphanumeric "A") == (Right ?A))
-      , expect ((parseAlphanumeric "Z") == (Right ?Z))
-      , expect ((parseAlphanumeric "") == (Left ["Input was Empty:"]))
-      , expect ((parseAlphanumeric "#") == (Left ["Leftmost char was not Alphanumeric: #"]))
+test> [ expect ((parseAlpha "a") == (Right ?a))
+      , expect ((parseAlpha "z") == (Right ?z))
+      , expect ((parseAlpha "A") == (Right ?A))
+      , expect ((parseAlpha "Z") == (Right ?Z))
+      , expect ((parseAlpha "") == (Left ["Input was Empty:"]))
+      , expect ((parseAlpha "#") == (Left ["Leftmost char was not Alphanumeric: #"]))
       ] |> tests |> run
 
 
